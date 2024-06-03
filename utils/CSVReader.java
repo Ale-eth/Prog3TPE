@@ -1,5 +1,6 @@
 package TPE.utils;
 
+import TPE.Procesador;
 import TPE.Tarea;
 import TPE.Tree;
 import TPE.TreeNode;
@@ -17,7 +18,6 @@ public class CSVReader {
    public CSVReader() {
 
    }
-
     public void readTasks(String taskPath,HashMap<String,Tarea> tareasHashMap,Tree tareasTree) {
         // Obtengo una lista con las lineas del archivo
         // lines.get(0) tiene la primer linea del archivo
@@ -38,7 +38,7 @@ public class CSVReader {
         }
     }
 
-    public void readProcessors(String processorPath) {
+    public void readProcessors(String processorPath, HashMap<String,Procesador> procesadoresHashMap) {
 
         // Obtengo una lista con las lineas del archivo
         // lines.get(0) tiene la primer linea del archivo
@@ -49,8 +49,11 @@ public class CSVReader {
             // Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
             String id = line[0].trim();
             String codigo = line[1].trim();
-            Boolean refrigerado = Boolean.parseBoolean(line[2].trim());
+            boolean refrigerado = Boolean.parseBoolean(line[2].trim());
             Integer anio = Integer.parseInt(line[3].trim());
+            Procesador p = new Procesador(id,codigo,refrigerado,anio);
+
+            procesadoresHashMap.put(p.getIdProcesador(), p);
         }
     }
 

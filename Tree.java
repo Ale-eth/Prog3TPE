@@ -19,14 +19,14 @@ public class Tree {
     }
 
     private void add(TreeNode actual, Tarea value) {
-        if (actual.getValue().getTiempoejecucion() > value.getTiempoejecucion()) {
+        if (actual.getValue().getTiempoEjecucion() > value.getTiempoEjecucion()) {
             if (actual.getLeft() == null) {
                 TreeNode temp = new TreeNode(value);
                 actual.setLeft(temp);
             } else {
                 add(actual.getLeft(), value);
             }
-        } else if (actual.getValue().getTiempoejecucion() < value.getTiempoejecucion()) {
+        } else if (actual.getValue().getTiempoEjecucion() < value.getTiempoEjecucion()) {
             if (actual.getRight() == null) {
                 TreeNode temp = new TreeNode(value);
                 actual.setRight(temp);
@@ -60,7 +60,7 @@ public class Tree {
         }
 
         // Recorrer hacia la izquierda si el valor es menor que el valor del nodo actual
-        if (value.getTiempoejecucion() < node.getValue().getTiempoejecucion()) {
+        if (value.getTiempoEjecucion() < node.getValue().getTiempoEjecucion()) {
             return hasElem(node.getLeft(), value);
         }
         // Recorrer hacia la derecha si el valor es mayor que el valor del nodo actual
@@ -143,9 +143,9 @@ public class Tree {
         // Comparo el size de los ArrayList
         // inserto el nodo de acuerdo al tamañao
         if (right.size() < left.size()) {
-            left.add(actual.getValue().getTiempoejecucion());
+            left.add(actual.getValue().getTiempoEjecucion());
         } else {
-            right.add(actual.getValue().getTiempoejecucion());
+            right.add(actual.getValue().getTiempoEjecucion());
         }
 
         // Retorno el mas largo
@@ -166,7 +166,7 @@ public class Tree {
     private void getFrontera(List<Integer> resultado, TreeNode actual) {
         if (actual != null) {
             if (actual.esHoja())
-                resultado.add(actual.getValue().getTiempoejecucion());
+                resultado.add(actual.getValue().getTiempoEjecucion());
             else {
                 getFrontera(resultado, actual.getLeft());
                 getFrontera(resultado, actual.getRight());
@@ -184,7 +184,7 @@ public class Tree {
         if (actual.getRight() != null)
             return getMaxElement(actual.getRight());
         else {
-            return actual.getValue().getTiempoejecucion();
+            return actual.getValue().getTiempoEjecucion();
         }
     }
 
@@ -197,7 +197,7 @@ public class Tree {
     private void getElementAtLevel(int lvl, TreeNode actual, List<Integer> resultado, int contador) {
         if (actual != null) {
             if (contador == lvl) {
-                resultado.add(actual.getValue().getTiempoejecucion());
+                resultado.add(actual.getValue().getTiempoEjecucion());
             } else {
                 getElementAtLevel(lvl, actual.getLeft(), resultado, contador + 1);
                 getElementAtLevel(lvl, actual.getRight(), resultado, contador + 1);
