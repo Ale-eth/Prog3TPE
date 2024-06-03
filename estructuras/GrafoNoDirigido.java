@@ -1,4 +1,6 @@
-package TPE;
+package TPE.estructuras;
+
+import TPE.estructuras.GrafoDirigido;
 
 public class GrafoNoDirigido<T> extends GrafoDirigido<T> {
 

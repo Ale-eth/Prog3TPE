@@ -1,10 +1,13 @@
-package TPE;
+package TPE.soluciones;
+
+import TPE.Procesador;
+import TPE.Tarea;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Backtracking extends Solucion{
+public class Backtracking extends Solucion {
     private int cantidadEstadosGenerados;
     private HashMap<String, List<Tarea>> mejoresAsignaciones;
 

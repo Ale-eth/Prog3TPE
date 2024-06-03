@@ -1,4 +1,4 @@
-package TPE;
+package TPE.estructuras;
 
 public class Arco<T> {
 

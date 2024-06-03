@@ -1,4 +1,6 @@
-package TPE;
+package TPE.estructuras;
+
+import TPE.Tarea;
 
 import java.util.ArrayList;
 import java.util.List;

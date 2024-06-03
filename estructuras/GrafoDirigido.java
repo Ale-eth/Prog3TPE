@@ -1,4 +1,7 @@
-package TPE;
+package TPE.estructuras;
+
+import TPE.estructuras.Arco;
+import TPE.estructuras.Grafo;
 
 import java.util.HashMap;
 import java.util.Iterator;

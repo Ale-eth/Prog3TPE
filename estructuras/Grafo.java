@@ -1,4 +1,6 @@
-package TPE;
+package TPE.estructuras;
+
+import TPE.estructuras.Arco;
 
 import java.util.Iterator;
 

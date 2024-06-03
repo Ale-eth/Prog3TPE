@@ -1,4 +1,7 @@
-package TPE;
+package TPE.soluciones;
+
+import TPE.Procesador;
+import TPE.Tarea;
 
 import java.util.ArrayList;
 import java.util.HashMap;
