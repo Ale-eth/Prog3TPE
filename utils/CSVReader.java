@@ -3,7 +3,6 @@ package TPE.utils;
 import TPE.Procesador;
 import TPE.Tarea;
 import TPE.Tree;
-import TPE.TreeNode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class CSVReader {

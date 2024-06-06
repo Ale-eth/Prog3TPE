@@ -27,7 +27,12 @@ public class Servicios {
         reader.readTasks(pathTareas,tareasHashMap,tareasTree);
     }
 
-
+    public ArrayList<Tarea> getTareasList(){
+        return new ArrayList<>(this.tareasHashMap.values());
+    }
+    public ArrayList<Procesador> getProcesadoresList(){
+        return new ArrayList<>(this.procesadoresHashMap.values());
+    }
     // Expresar la complejidad temporal del servicio 1.
     // Servicio 1: Dado un identificador de tarea obtener toda la información de la tarea asociada.
     public Tarea servicio1(String ID) {
