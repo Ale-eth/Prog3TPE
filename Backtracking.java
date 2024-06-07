@@ -5,13 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Backtracking{
+public class Backtracking extends EstrategiaAlgoritmica{
     private int cantidadEstadosGenerados;
-    private List<Tarea> tareas;
-    private List<Procesador> procesadores;
     public Backtracking(List<Tarea> tareas,List<Procesador> procesadores) {
-        this.tareas=tareas;
-        this.procesadores=procesadores;
+        super(tareas,procesadores);
     }
 
     public int getCantidadEstadosGenerados() {
@@ -26,13 +23,13 @@ public class Backtracking{
     }
 
     private boolean backtrack(int tareaActual, int tiempoMaximoNoRefrigerado,ArrayList<Asignacion> asignaciones){
-        if (tareaActual== tareas.size()){
+        if (tareaActual== super.getTareas().size()){
             return true;
         }
-        Tarea tarea = tareas.get(tareaActual); // Me guardo la tarea que quiero procesar
-        for (Procesador p:procesadores){
+        Tarea tarea = super.getTareas().get(tareaActual); // Me guardo la tarea que quiero procesar
+        for (Procesador p:super.getProcesadores()){
             cantidadEstadosGenerados++;
-            if (esAsignable(tarea,p,tiempoMaximoNoRefrigerado,asignaciones)){
+            if (super.esAsignable(tarea,p,tiempoMaximoNoRefrigerado,asignaciones)){
                 asignaciones.add(new Asignacion(p,tarea));
                 if (backtrack(tareaActual+1,tiempoMaximoNoRefrigerado,asignaciones)){
                     return true;
@@ -42,50 +39,21 @@ public class Backtracking{
         }
         return false;
     }
-
-    private boolean esAsignable(Tarea t, Procesador p, int tiempoMaximoNoRefrigerado,List<Asignacion> asignaciones){ // Verificar que el procesador no refrigerado no exceda el tiempo max permitid
-        int tareasCriticas = 0;
-        int tiempoTotal = 0;
+    private void imprimir(List<Asignacion> asignaciones){
+        Map<Procesador,List<Tarea>> asignacionesProcesador = new HashMap<>();
         for (Asignacion a:asignaciones){
-            if (a.procesador.equals(p)){
-                if (a.tarea.esCritica()){
-                    tareasCriticas++;
-                }
-                tiempoTotal+=a.tarea.getTiempoEjecucion();
-            }
+            asignacionesProcesador.computeIfAbsent(a.procesador,k->new ArrayList<>()).add(a.tarea);
         }
-        if (t.esCritica()&&tareasCriticas>=2){
-            return false;
+        int tiempoMaximo = 0;
+        for (Map.Entry<Procesador,List<Tarea>> entry:asignacionesProcesador.entrySet()){
+            Procesador p = entry.getKey();
+            List<Tarea> tareas = entry.getValue();
+            int tiempoTotal = tareas.stream().mapToInt(Tarea::getTiempoEjecucion).sum();
+            tiempoMaximo=Math.max(tiempoMaximo,tiempoTotal);
+            System.out.println("Procesador: "+p.getIdProcesador() + tareas);
         }
-        if (!p.esRefrigerado()&&(tiempoTotal+t.getTiempoEjecucion()>tiempoMaximoNoRefrigerado)){
-            return false;
-        }
-        return true;
-    }
-        private void imprimir(List<Asignacion> asignaciones){
-            Map<Procesador,List<Tarea>> asignacionesProcesador = new HashMap<>();
-            for (Asignacion a:asignaciones){
-                asignacionesProcesador.computeIfAbsent(a.procesador,k->new ArrayList<>()).add(a.tarea);
-            }
-            int tiempoMaximo = 0;
-            for (Map.Entry<Procesador,List<Tarea>> entry:asignacionesProcesador.entrySet()){
-                Procesador p = entry.getKey();
-                List<Tarea> tareas = entry.getValue();
-                int tiempoTotal = tareas.stream().mapToInt(Tarea::getTiempoEjecucion).sum();
-                tiempoMaximo=Math.max(tiempoMaximo,tiempoTotal);
-                System.out.println("Procesador: "+p.getIdProcesador() + tareas);
-            }
-            System.out.println("Tiempo maximo: "+tiempoMaximo);
-            System.out.println("Estados generados: "+cantidadEstadosGenerados);
+        System.out.println("Tiempo maximo: "+tiempoMaximo);
+        System.out.println("Estados generados: "+cantidadEstadosGenerados);
 
-        }
-    private static class Asignacion {
-        Procesador procesador;
-        Tarea tarea;
-
-        Asignacion(Procesador procesador, Tarea tarea) {
-            this.procesador = procesador;
-            this.tarea = tarea;
-        }
     }
 }
