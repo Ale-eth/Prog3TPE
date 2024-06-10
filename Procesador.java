@@ -14,6 +14,7 @@ public class Procesador {
         this.anioFuncionamiento = anioFuncionamiento;
         this.cantTareasCriticasPermitidas = MAX_TAREAS_CRITICAS;
     }
+    // Getters
     public String getIdProcesador() {
         return idProcesador;
     }
@@ -38,22 +39,12 @@ public class Procesador {
         return anioFuncionamiento;
     }
 
-    public void setAnioFuncionamiento(Integer anioFuncionamiento) {
-        this.anioFuncionamiento = anioFuncionamiento;
-    }
-
     public int getCantTareasCriticasPermitidas() {
         return cantTareasCriticasPermitidas;
     }
-
-    public int getCantTareasCriticasProcesadas() {
-        return cantTareasCriticasProcesadas;
+    public void setAnioFuncionamiento(Integer anioFuncionamiento) {
+        this.anioFuncionamiento = anioFuncionamiento;
     }
-
-    public void setCantTareasCriticasProcesadas(int cantTareasCriticasProcesadas) {
-        this.cantTareasCriticasProcesadas = cantTareasCriticasProcesadas;
-    }
-
     @Override
     public String toString() {
         return "Procesador{" +

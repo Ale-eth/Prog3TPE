@@ -26,7 +26,7 @@ public abstract class EstrategiaAlgoritmica {
     public List<Procesador> getProcesadores() {
         return procesadores;
     }
-    boolean esAsignable(Tarea t, Procesador p){ // Verificar que el procesador no refrigerado no exceda el tiempo max permitid
+    public boolean esAsignable(Tarea t, Procesador p,ArrayList<Asignacion> asignaciones){ // Verificar que el procesador no refrigerado no exceda el tiempo max permitid
         int tareasCriticas = 0;
         int tiempoTotal = 0;
         for (Asignacion a:asignaciones){
@@ -37,7 +37,7 @@ public abstract class EstrategiaAlgoritmica {
                 tiempoTotal+=a.tarea.getTiempoEjecucion();
             }
         }
-        if (t.esCritica()&&tareasCriticas>=2){
+        if (t.esCritica()&&tareasCriticas == p.getCantTareasCriticasPermitidas()){
             return false;
         }
         if (!p.esRefrigerado()&&(tiempoTotal+t.getTiempoEjecucion()>maximoSinRefrigeracion)){

@@ -14,8 +14,7 @@ public class Tarea {
         this.critica = critica;
         this.prioridad = prioridad;
     }
-
-    // Getters y Setters
+    // Getters
     public String getId(){
         return this.id;
     }
