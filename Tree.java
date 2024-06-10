@@ -4,20 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tree {
-
     private TreeNode root;
-
     public Tree() {
         this.root = null;
     }
-
     public void add(Tarea value) {
         if (this.root == null)
             this.root = new TreeNode(value);
         else
             this.add(this.root, value);
     }
+    public Tree copy() {
+        Tree newTree = new Tree();
+        newTree.root = copyTree(this.root);
+        return newTree;
+    }
+    private TreeNode copyTree(TreeNode node) {
+        if (node == null) {
+            return null;
+        }
 
+        TreeNode newNode = new TreeNode(new Tarea(
+                node.getValue().getId(),
+                node.getValue().getNombreTarea(),
+                node.getValue().getTiempoEjecucion(),
+                node.getValue().esCritica(),
+                node.getValue().getPrioridad()
+        ));
+
+        newNode.setLeft(copyTree(node.getLeft()));
+        newNode.setRight(copyTree(node.getRight()));
+
+        return newNode;
+    }
     private void add(TreeNode actual, Tarea value) {
         if (actual.getValue().getTiempoEjecucion() > value.getTiempoEjecucion()) {
             if (actual.getLeft() == null) {
@@ -26,7 +45,7 @@ public class Tree {
             } else {
                 add(actual.getLeft(), value);
             }
-        } else if (actual.getValue().getTiempoEjecucion() < value.getTiempoEjecucion()) {
+        } else if (actual.getValue().getTiempoEjecucion() <= value.getTiempoEjecucion()) {
             if (actual.getRight() == null) {
                 TreeNode temp = new TreeNode(value);
                 actual.setRight(temp);
@@ -35,7 +54,6 @@ public class Tree {
             }
         }
     }
-
     // Complejidad O(1) - Devuelve el valor de la raíz del árbol
     public Tarea getRoot() {
         if (this.root != null) {
@@ -44,11 +62,9 @@ public class Tree {
             return null;
         }
     }
-
     public boolean hasElem(Tarea tarea) {
         return hasElem(root, tarea);
     }
-
     // Complejidad es O(h) - h es la altura del árbol
     private boolean hasElem(TreeNode node, Tarea value) {
         if (node == null) {
@@ -68,21 +84,17 @@ public class Tree {
             return hasElem(node.getRight(), value);
         }
     }
-
     // Complejidad O(1) - Solo verifica si la raíz es nula
     public boolean isEmpty() {
         return this.root == null;
     }
-
     // Complejidad O(n) - En el peor caso tiene que recorrer todo el árbol
     public void insert(Tarea value) {
         add(root, value);
     }
-
     public void printPosOrder() {
         printPosOrder(root);
     }
-
     // Complejidad O(n) - Tiene que recorrer todo el árbol
     private void printPosOrder(TreeNode actual) { // Izq, Der, Raíz
         if (actual == null)
@@ -93,11 +105,9 @@ public class Tree {
             System.out.print(actual.getValue() + " ");
         }
     }
-
     public void printPreOrder() {
         printPreOrder(root);
     }
-
     // Complejidad O(n) - Tiene que recorrer todo el árbol
     private void printPreOrder(TreeNode actual) { // Raíz, Izq, Der
         if (actual == null)
@@ -108,26 +118,22 @@ public class Tree {
             printPreOrder(actual.getRight());
         }
     }
-
     public void printInOrder() {
         printInOrder(root);
     }
-
     // Complejidad O(n) - Tiene que recorrer todo el árbol
     private void printInOrder(TreeNode actual) { // Izq, Raíz, Der
         if (actual == null)
             System.out.println(" - ");
         else {
-            printPreOrder(actual.getLeft());
+            printInOrder(actual.getLeft());
             System.out.print(actual.getValue() + " ");
-            printPreOrder(actual.getRight());
+            printInOrder(actual.getRight());
         }
     }
-
     public List<Integer> getLongestBranch() {
         return getLongestBranch(root);
     }
-
     // Complejidad es O(n) - Recorre todos los nodos del árbol
     private List<Integer> getLongestBranch(TreeNode actual) {
         // Si la rama es null devuelvo lista vacía
@@ -155,13 +161,11 @@ public class Tree {
             return left;
         }
     }
-
     public List<Integer> getFrontera() {
         List<Integer> resultado = new ArrayList<>();
         getFrontera(resultado, root);
         return resultado;
     }
-
     // Complejidad es O(n) - Recorre todos los nodos del árbol
     private void getFrontera(List<Integer> resultado, TreeNode actual) {
         if (actual != null) {
@@ -173,11 +177,9 @@ public class Tree {
             }
         }
     }
-
     public Integer getMaxElement() {
         return getMaxElement(root);
     }
-
     private Integer getMaxElement(TreeNode actual) {
         if (actual == null)
             return null;
@@ -187,13 +189,11 @@ public class Tree {
             return actual.getValue().getTiempoEjecucion();
         }
     }
-
     public List<Integer> getElementAtLevel(int lvl) {
         List<Integer> resultado = new ArrayList<>();
         getElementAtLevel(lvl, root, resultado, 0);
         return resultado;
     }
-
     private void getElementAtLevel(int lvl, TreeNode actual, List<Integer> resultado, int contador) {
         if (actual != null) {
             if (contador == lvl) {
@@ -204,7 +204,6 @@ public class Tree {
             }
         }
     }
-
     public TreeNode getNodoMenorIzquierdo(TreeNode actual) {
         // Recorre el subárbol hacia la izquierda hasta encontrar el nodo más pequeño
         if (actual.getLeft() != null) {
@@ -212,13 +211,11 @@ public class Tree {
         }
         return actual;
     }
-
     public List<Tarea> getTareasEntreNivelDePrioridad(Integer limiteInferior, Integer limiteSuperior) {
         ArrayList<Tarea> result = new ArrayList<>();
         getTareasEntreNivelDePrioridad(this.root, limiteInferior, limiteSuperior, result);
         return result;
     }
-
     private void getTareasEntreNivelDePrioridad(TreeNode actual, Integer limiteInferior, Integer limiteSuperior, List<Tarea> result) { //O(n) n:elementos del arbol
         if (actual != null) {
             if ((actual.getValue().getPrioridad() > limiteInferior) && (actual.getValue().getPrioridad() < limiteSuperior)) result.add(actual.getValue());
@@ -226,49 +223,4 @@ public class Tree {
             getTareasEntreNivelDePrioridad(actual.getRight(), limiteInferior, limiteSuperior, result);
         }
     }
-
-//    public boolean delete(Integer value) {
-//        if (value != null) {
-//            root = delete(root, value);
-//            // Se actualiza el nodo raíz en caso de que se elimine
-//            // Retorna true para indicar que se eliminó el valor
-//            return true;
-//        }
-//        // Si el valor es nulo, retorna false porque no se puede eliminar
-//        return false;
-//    }
-
-//    private TreeNode delete(TreeNode actual, Integer value) {
-//        // Comprueba si el valor a eliminar es menor que el valor del nodo actual
-//        if (value < actual.getValue()) {
-//            // Si es menor, se llama recursivamente al método delete con el nodo izquierdo
-//            actual.setLeft(delete(actual.getLeft(), value));
-//        } else if (value > actual.getValue()) {
-//            // Si es mayor, se llama recursivamente al método delete con el nodo derecho
-//            actual.setRight(delete(actual.getRight(), value));
-//        } else {
-//            // Si el valor es igual al valor del nodo actual, se procede a eliminarlo
-//            // Caso 1: El nodo no tiene hijo izquierdo
-//            if (actual.getLeft() == null) {
-//                // Retorna el hijo derecho del nodo actual (puede ser nulo o no)
-//                return actual.getRight();
-//            }
-//            // Caso 2: El nodo no tiene hijo derecho
-//            else if (actual.getRight() == null) {
-//                // Retorna el hijo izquierdo del nodo actual
-//                return actual.getLeft();
-//            }
-//            // Caso 3: El nodo tiene dos hijos
-//
-//            // Encuentra el nodo con el valor mínimo en el subárbol derecho
-//            TreeNode nodoMenor = getNodoMenorIzquierdo(actual.getRight());
-//            // Copia el valor mínimo al nodo actual
-//            actual.setValue(nodoMenor.getValue());
-//            // Elimina el nodo con el valor mínimo del subárbol derecho
-//            actual.setRight(delete(actual.getRight(), nodoMenor.getValue()));
-//
-//        }
-//        // Retorna el nodo actual modificado
-//        return actual;
-//    }
 }
