@@ -6,17 +6,13 @@ public class Procesador {
     private boolean refrigerado;
     private Integer anioFuncionamiento;
     private int cantTareasCriticasPermitidas;
-    private int cantTareasCriticasProcesadas;
     private final static int MAX_TAREAS_CRITICAS = 2;
-
-
     public Procesador(String idProcesador, String codigoProcesador, boolean refrigerado, Integer anioFuncionamiento ) {
         this.idProcesador = idProcesador;
         this.codigoProcesador = codigoProcesador;
         this.refrigerado = refrigerado;
         this.anioFuncionamiento = anioFuncionamiento;
         this.cantTareasCriticasPermitidas = MAX_TAREAS_CRITICAS;
-        this.cantTareasCriticasProcesadas = 0;
     }
     public String getIdProcesador() {
         return idProcesador;
